@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "zhang-haoran-portfolio-current.zip"
+      - ".portfolio-parts/**"
       - "scripts/build-pages.mjs"
       - ".github/workflows/pages.yml"
 
@@ -24,6 +24,11 @@ jobs:
     steps:
       - name: Get portfolio files
         uses: actions/checkout@v4
+
+      - name: Reassemble current portfolio
+        run: |
+          cat .portfolio-parts/part-* > zhang-haoran-portfolio-current.zip
+          unzip -tq zhang-haoran-portfolio-current.zip
 
       - name: Unpack current portfolio
         run: |
