@@ -16,13 +16,18 @@ const copyText = (from, to, transform = (value) => value) => {
   writeFileSync(target, transform(readFileSync(join(root, from), "utf8")), "utf8");
 };
 
-copyText("app/page.tsx", "page.tsx");
+copyText("app/page.tsx", "page.tsx", (value) =>
+  value.replaceAll("/portfolio/", "./portfolio/").replaceAll("/projects/", "./projects/")
+);
 copyText("app/RandomMotion.tsx", "RandomMotion.tsx");
 copyText("app/projects.ts", "projects.ts", (value) =>
   value.replaceAll("/portfolio/", "./portfolio/").replaceAll("/projects/", "./projects/")
 );
 copyText("app/globals.css", "globals.css", (value) =>
-  value.replace(/^\s*@import\s+[\"']tailwindcss[\"'];?\s*/m, "")
+  value
+    .replace(/^\s*@import\s+[\"']tailwindcss[\"'];?\s*/m, "")
+    .replaceAll("url('/", "url('../")
+    .replaceAll('url(\"/', 'url(\"../')
 );
 
 writeFileSync(join(source, "main.tsx"), `
