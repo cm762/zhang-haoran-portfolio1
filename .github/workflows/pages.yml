@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - ".portfolio-parts/**"
+      - "github-overrides/**"
       - "scripts/build-pages.mjs"
       - ".github/workflows/pages.yml"
 
@@ -34,6 +35,11 @@ jobs:
         run: |
           mkdir site
           unzip -q zhang-haoran-portfolio-current.zip -d site
+
+      - name: Apply corrected MOMO artwork
+        run: |
+          cp -f github-overrides/public/portfolio/momo/09.webp site/public/portfolio/momo/09.webp
+          cp -f github-overrides/public/portfolio/momo/13.webp site/public/portfolio/momo/13.webp
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
